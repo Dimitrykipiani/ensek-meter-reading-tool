@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ensek.MeterReadingService.csproj" />
+    <ProjectReference Include="..\..\api\Ensek.MeterReadingService\Ensek.MeterReadingService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
