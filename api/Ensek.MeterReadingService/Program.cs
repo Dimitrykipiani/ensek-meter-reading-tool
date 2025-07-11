@@ -18,7 +18,7 @@ public class Program
 
 
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {
@@ -27,16 +27,22 @@ public class Program
                 Title = "Ensek Meter Reading API",
                 Version = "v1"
             });
-
-            // Remove all operation filters for now
-            // Do NOT add FileUploadOperationFilter or anything custom
         });
-
-
 
         // Register SQL Server DbContext
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("EnsekDB")));
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowLocalhost5173", policy =>
+            {
+                policy.WithOrigins("http://localhost:5173")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
+        });
+
 
         var app = builder.Build();
 
@@ -53,6 +59,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseCors("AllowLocalhost5173");
 
         app.UseAuthorization();
 
