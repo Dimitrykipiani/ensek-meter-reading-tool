@@ -1,5 +1,6 @@
 
 using Ensek.MeterReadingService.Data;
+using Ensek.MeterReadingService.Exceptions;
 using Ensek.MeterReadingService.Services;
 using Ensek.MeterReadingService.Swagger;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,8 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger(c =>
